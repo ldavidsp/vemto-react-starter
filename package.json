@@ -6,7 +6,7 @@
     "description": "Vemto React Starter plugin to Laravel to React.",
     "image": "https://laravel.com/images/starter-kits/cube-react.png",
     "main": "src/main.js",
-    "vueComponent": "dist/react-starter.umd.min.js",
+    "vueComponent": "dist/vemto-react-starter.umd.min.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/ldavidsp/vemto-react-starter"
