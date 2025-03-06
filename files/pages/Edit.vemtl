@@ -15,7 +15,7 @@ import { Head } from '@inertiajs/react';
  */
 export default function <$ modelName $>EditPage({ <$ modelNamePascalCase $> }: { <$ modelNamePascalCase $>: <$ modelName $>Entity }) {
   return (
-    <SidebarLayout title={'Agregar nuevo <$ modelNamePascalCase $>'}>
+    <SidebarLayout title={'Editar el <$ modelNamePascalCase $>'}>
       <Head title="Editar el <$ modelNamePascalCase $>" />
 
       <div className="container mx-auto max-w-6xl px-4 pt-4">
