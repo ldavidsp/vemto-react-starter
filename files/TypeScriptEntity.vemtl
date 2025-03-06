@@ -1,0 +1,55 @@
+<# TEMPLATE VARIABLES #>
+<% let modelName = this.model.name.case('pascalCase') %>
+/**
+* <$ modelName $>Entity.
+*/
+export class <$ modelName $>Entity {
+  id!: number;
+  <% for (let field of this.model.fillableFields()) { %>
+  <% if(!field.isPrimaryKey()) { %>
+  <% if(field.type == 'integer' || field.type == 'unsignedBigInteger') {%>
+  <$ field.name $>!: number;
+  <% }%>
+  <% if(field.type == 'decimal') {%>
+  <$ field.name $>!: number;
+  <% }%>
+  <% if(field.type == 'string' || field.type == 'text') {%>
+  <$ field.name $>!: string;
+  <% }%>
+  <% if(field.type == 'boolean') {%>
+  <$ field.name $>!: boolean;
+  <% }%>
+  <% if(field.type == 'date' || field.type == 'dateTime') {%>
+  <$ field.name $>!: string;
+  <% }%>
+  <% } %>
+  <% } %>
+}
+
+/**
+ * <$ modelName $> entity initial
+ */
+export const <$ modelName.case('camelCase') $>EntityInitial = {
+  id: 0,
+  <% for (let field of this.model.fillableFields()) { %>
+  <% if(!field.isPrimaryKey()) { %>
+  <% if(field.type == 'integer' || field.type == 'unsignedBigInteger') {%>
+  <$ field.name $>: 0,
+  <% }%>
+  <% if(field.type == 'decimal') {%>
+  <$ field.name $>: 0,
+  <% }%>
+  <% if(field.type == 'string' || field.type == 'text') {%>
+  <$ field.name $>: '',
+  <% }%>
+  <% if(field.type == 'boolean') {%>
+  <$ field.name $>: false,
+  <% }%>
+  <% if(field.type == 'date' || field.type == 'dateTime') {%>
+  <$ field.name $>: '',
+  <% }%>
+  <% } %>
+  <% } %>
+}
+
+

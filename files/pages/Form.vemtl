@@ -1,0 +1,116 @@
+<% let fields = this.model.fields %>
+<% let modelName = this.model.modelName.case('pascalCase') %>
+<% let modelNameLowerCase = this.model.modelName.toLowerCase() %>
+<% let modelNamePascalCase = this.model.modelName %>
+<% let modelPluralCamelCase = this.model.routes %>
+<% let pagesPrefix = this.model.routes %>
+<% let routesPrefix = this.model.routes %>
+
+import { Sonner } from '@billingflow/components/billingflow/alerts/Sonner';
+import { IconBack } from '@billingflow/components/billingflow/icons/svg/actions/IconBack';
+import { IconSaved } from '@billingflow/components/billingflow/icons/svg/actions/IconSaved';
+import { IconUpdate } from '@billingflow/components/billingflow/icons/svg/actions/IconUpdate';
+import InputError from '@billingflow/components/laravel/InputError';
+import { Button } from '@billingflow/components/shadcn/button';
+import { Input } from '@billingflow/components/shadcn/input';
+import { Label } from '@billingflow/components/shadcn/label';
+import {
+  <$ modelName $>Entity,
+  <$ modelNameLowerCase $>EntityInitial,
+} from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/entities/<$ modelName $>.entity';
+import { Link, router, useForm } from '@inertiajs/react';
+import { FormEvent, FormEventHandler } from 'react';
+
+/**
+ * <$ modelName $>Form component.
+ *
+ * @param isEdit
+ * @param <$ modelNameLowerCase $>
+ * @constructor
+ */
+export const <$ modelName $>Form = ({
+  isEdit,
+  <$ modelNameLowerCase $>,
+}: {
+  isEdit: boolean;
+  <$ modelNameLowerCase $>?: <$ modelName $>Entity;
+}) => {
+  const initFormData = <$ modelNameLowerCase $> ? <$ modelNameLowerCase $> : <$ modelNameLowerCase $>EntityInitial;
+  // @ts-ignore
+  const { data, setData, post, errors } = useForm<<$ modelName $>Entity>(initFormData);
+
+  const onSubmit: FormEventHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (isEdit) {
+      post(route('<$ modelPluralCamelCase $>.update', data.id), {
+        onFinish: response => {
+          const { completed } = response;
+          if (completed) {
+            Sonner.success(
+              'Editar <$ modelNameLowerCase $>',
+              '<$ modelNameLowerCase $> actualizado correctamente',
+            );
+            router.get(route('<$ modelPluralCamelCase $>.show', data.id));
+          }
+        },
+      });
+    } else {
+      post(route('<$ modelPluralCamelCase $>.store'), {
+        onFinish: response => {
+          const { completed } = response;
+          if (completed) {
+            Sonner.success(
+              'Nuevo <$ modelNameLowerCase $>',
+              'El <$ modelNameLowerCase $> se ha creado correctamente',
+            );
+            router.get(route('<$ modelPluralCamelCase $>.index'));
+          }
+        },
+      });
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="container mx-auto max-w-[1200px] p-6">
+        <div className="mb-8 flex items-center justify-between">
+          <div className="text-form-title text-on-surface flex items-start gap-2 font-semibold">
+            <Link
+              href={route('<$ modelPluralCamelCase $>.index')}
+              className={'text-on-surface flex'}>
+              <IconBack className="stroke-on-surface mr-4 h-45" />
+              {isEdit ? 'Editar el <$ modelNameLowerCase $>' : 'Agregar nuevo <$ modelNameLowerCase $>'}
+            </Link>
+          </div>
+          <div className="flex gap-3">
+            <Button
+              type={'submit'}
+              className={'!text-surface text-bodyLarge font-semibold'}>
+              {isEdit ? (
+                <IconUpdate className="stroke-surface h-6 w-6" />
+              ) : (
+                <IconSaved className="stroke-surface h-6 w-6" />
+              )}
+              {isEdit ? 'Actualizar <$ modelNameLowerCase $>' : 'Agregar <$ modelNameLowerCase $>'}
+            </Button>
+          </div>
+        </div>
+
+        <div className={'flex flex-wrap'}>
+        <% for (let field of fields) { %>
+          <div className={'my-2 w-full !px-1 lg:w-4/12'}>
+            <Label><$ field.label $></Label>
+            <Input
+              name={'<$ field.name $>'}
+              value={data.<$ field.name $>}
+              onChange={e => setData('<$ field.name $>', e.target.value)}
+            />
+            <InputError message={errors.<$ field.name $>} className="mt-2" />
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </form>
+  );
+};

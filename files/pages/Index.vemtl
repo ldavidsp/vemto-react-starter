@@ -1,0 +1,162 @@
+<% let modelName = this.model.modelName.case('pascalCase') %>
+<% let modelNameLowerCase = this.model.modelName.toLowerCase() %>
+<% let modelNamePascalCase = this.model.modelName %>
+<% let modelPluralCamelCase = this.model.routes %>
+<% let pagesPrefix = this.model.routes %>
+<% let routesPrefix = this.model.routes %>
+
+import { Empty } from '@billingflow/components/billingflow/empty/Empty';
+import { IconAdd } from '@billingflow/components/billingflow/icons/svg/actions/IconAdd';
+import { IconFilter } from '@billingflow/components/billingflow/icons/svg/actions/IconFilter';
+import { StockEmpty } from '@billingflow/components/billingflow/icons/svg/empty/StockEmpty';
+import { IconClose } from '@billingflow/components/billingflow/icons/svg/icons/IconClose';
+import { IconSearch } from '@billingflow/components/billingflow/icons/svg/icons/IconSearch';
+import { CustomPagination } from '@billingflow/components/billingflow/pagination/CustomPagination';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@billingflow/components/shadcn/alert';
+import { Button } from '@billingflow/components/shadcn/button';
+import { Label } from '@billingflow/components/shadcn/label';
+import SidebarLayout from '@billingflow/layouts/SidebarLayout';
+import { usePermissions } from '@billingflow/hooks/usePermissions';
+import { <$ modelName $>Entity } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/entities/<$ modelName $>.entity';
+import { <$ modelName $>Table } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/table/<$ modelName $>Table';
+import { SharedData } from '@billingflow/types';
+import { Head, Link, router, usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import { AlertCircle } from 'lucide-react';
+import { useDebouncedCallback } from 'use-debounce';
+
+/**
+ * <$ modelName $> module.
+ *
+ * @constructor
+ */
+export default function <$ modelName $>IndexPage({
+  <$ modelPluralCamelCase $>,
+  name,
+}: {
+  <$ modelPluralCamelCase $>: PaginationListing<<$ modelName $>Entity[]>;
+  name: string;
+}) {
+  const { flash } = usePage<SharedData>().props;
+  const { can } = usePermissions();
+  const [filters, setFilters] = useState({
+    name: name,
+    page: 1,
+  });
+
+  const debouncedSearch = useDebouncedCallback(newFilters => {
+    router.get(
+      route('<$ routesPrefix $>.index'),
+      { ...newFilters, page: 1 },
+      { preserveState: true, replace: true },
+    );
+  }, 300);
+
+  useEffect(() => {
+    debouncedSearch(filters);
+  }, [filters, debouncedSearch]);
+
+  return (
+    <SidebarLayout title={'<$ modelName $>s'}>
+      <Head title="<$ modelName $>s" />
+
+      <div className="container mx-auto max-w-6xl px-6 pt-4">
+        <div className=''>
+          <div className="flex justify-between">
+            <div className="flex items-center gap-4">
+              <h1 className="text-page-title text-on-surface font-bold">
+                Todos los <$ modelPluralCamelCase $>
+              </h1>
+            </div>
+            <div className="flex justify-end">
+              {can('<$ routesPrefix $>.create') && (
+                <Link href={route('<$ routesPrefix $>.create')}>
+                  <Button
+                    className={'text-bodyLarge text-surface font-semibold'}>
+                    <IconAdd className="stroke-surface h-6 w-6" />
+                    Crear <$ modelNamePascalCase $>
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+          <hr className="border-surface-container-highest mt-3 mb-6 w-full" />
+        {flash.error && (
+          <div className="flex items-center justify-center gap-4">
+            <Alert
+              variant="destructive"
+              className={'border-error my-4 w-8/12 rounded-xl border-2'}>
+              <AlertCircle className="stroke-error h-4 w-4" />
+              <AlertTitle className="text-error text-xl">Error</AlertTitle>
+              <AlertDescription className={'text-error'}>
+                {flash.error}
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
+          <div className={'flex-wra flex w-full justify-center'}>
+            <div className={'my-2 w-full space-y-2 px-4 md:w-8/12'}>
+              <Label className={'flex items-center'}>
+                <IconFilter className="stroke-on-surface mr-2 h-[20px] w-[20px]" />
+                Buscar un <$ routesPrefix $>
+              </Label>
+              <div className="relative flex h-fit w-[100%] cursor-pointer">
+                <div className="relative flex w-full py-1">
+                  <div className="absolute flex h-[50px] w-[50px] items-center justify-center">
+                    <div className="text-on-surface-variant">
+                      <IconSearch className="stroke-on-surface-variant h-6 w-6" />
+                    </div>
+                  </div>
+                  <input
+                    name="search"
+                    value={filters.name}
+                    type="text"
+                    onChange={event => {
+                      setFilters({
+                        ...filters,
+                        name: event.target.value,
+                        page: 1,
+                      });
+                    }}
+                    className="peer bg-surface-container-highest placeholder-on-surface-variant text-on-surface-variant flex h-[50px] w-full rounded-lg border-0 px-[12px] pl-[56px] text-sm focus:border-transparent focus:ring-transparent focus:outline-none"
+                    placeholder="Name..."
+                  />
+
+                  <div
+                    className="text-on-surfac absolute right-0 flex h-[53px] items-center justify-end"
+                    onClick={() =>
+                      setFilters({ ...filters, name: '', page: 1 })
+                    }>
+                    {filters.name !== '' && (
+                      <IconClose className="stroke-on-surface-variant h-[38px] w-[38px]" />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {<$ modelPluralCamelCase $>.data.length > 0 && (
+          <>
+            <<$ modelName $>Table <$ modelPluralCamelCase $>={<$ modelPluralCamelCase $>.data} />
+            <CustomPagination
+              currentPage={<$ modelPluralCamelCase $>.current_page}
+              totalPages={<$ modelPluralCamelCase $>.last_page}
+              onPageChange={page => setFilters({ ...filters, page })}
+            />
+          </>
+        )}
+        {<$ modelPluralCamelCase $>.data.length === 0 && (
+          <Empty
+            image={<StockEmpty className={'w-[200px]'} />}
+            message={'No hay <$ modelPluralCamelCase $>'}
+          />
+        )}
+      </div>
+    </SidebarLayout>
+  );
+};

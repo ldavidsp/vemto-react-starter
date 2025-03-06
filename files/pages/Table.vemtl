@@ -1,0 +1,132 @@
+<% let fields = this.model.fields %>
+<% let modelName = this.model.modelName.case('pascalCase') %>
+<% let modelNameLowerCase = this.model.modelName.toLowerCase() %>
+<% let modelNamePascalCase = this.model.modelName %>
+<% let modelPluralCamelCase = this.model.routes %>
+<% let pagesPrefix = this.model.routes %>
+<% let routesPrefix = this.model.routes %>
+
+import { IconEdit } from '@billingflow/components/billingflow/icons/svg/actions/IconEdit';
+import { IconShow } from '@billingflow/components/billingflow/icons/svg/actions/IconShow';
+import { IconTrash } from '@billingflow/components/billingflow/icons/svg/icons/IconTrash';
+import { Button } from '@billingflow/components/shadcn/button';
+import { DeleteModal } from '@billingflow/components/billingflow/modal/DeleteModal';
+import {
+  Table,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@billingflow/components/shadcn/table';
+import { usePermissions } from '@billingflow/hooks/usePermissions';
+import { <$ modelName $>Entity } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/entities/<$ modelName $>.entity';
+import { Link } from '@inertiajs/react';
+import { motion } from 'motion/react';
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 50, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
+
+const duration = { duration: 0.1 };
+
+/**
+ * <$ modelName $> table.
+ *
+ * @param <$ modelPluralCamelCase $>
+ * @constructor
+ */
+export const <$ modelName $>Table = ({
+  <$ modelPluralCamelCase $>,
+}: {
+  <$ modelPluralCamelCase $>: <$ modelName $>Entity[];
+}) => {
+  const { can } = usePermissions();
+
+  return (
+    <Table className={'mt-4 w-full max-w-full'}>
+      <TableHeader className={'bg-surface sticky top-0 backdrop-blur-sm'}>
+        <TableRow className={'hover:bg-transparent'}>
+        <% fields.forEach((field, index) => { %>
+          <TableHead className="text-start"><$ field.label $></TableHead>
+        <% }); %>
+        <TableHead className="text-end">Acciones</TableHead>
+        </TableRow>
+      </TableHeader>
+      <motion.tbody
+        className={'[&_tr:last-child]:border-0'}
+        initial="hidden"
+        animate="visible"
+        variants={container}>
+        {<$ modelPluralCamelCase $>?.map((<$ modelNamePascalCase $>, index) => (
+          <motion.tr
+            key={index}
+            variants={item}
+            transition={duration}
+            className={
+              'border-surface-container-highest hover:bg-surface-container data-[state=selected]:bg-muted cursor-pointer transition-colors'
+            }>
+            <% fields.forEach((field, index) => { %>
+            <TableCell className="text-primary rounded-s-x text-start">
+              {<$ modelNamePascalCase $>.<$ field.name $>}
+            </TableCell>
+            <% }); %>
+            <TableCell className="rounded-e-xl text-left">
+              <div className={'flex justify-end space-x-2'}>
+                {can('<$ routesPrefix $>.view') && (
+                  <Button
+                    asChild
+                    variant={'outline'}
+                    className="bg-surface-container-highes flex h-[38px] w-[38px] items-center justify-center rounded-full">
+                    <Link href={route('<$ routesPrefix $>.show', <$ modelNamePascalCase $>.id)}>
+                      <IconShow className="stroke-on-surface h-[25px] w-[25px]" />
+                    </Link>
+                  </Button>
+                )}
+
+                {can('<$ routesPrefix $>.update') && (
+                  <Button
+                    asChild
+                    variant={'outline'}
+                    className="bg-surface-container-highes flex h-[38px] w-[38px] items-center justify-center rounded-full">
+                    <Link href={route('<$ routesPrefix $>.edit', <$ modelNamePascalCase $>.id)}>
+                      <IconEdit className="stroke-on-surface h-[25px] w-[25px]" />
+                    </Link>
+                  </Button>
+                )}
+
+                {can('<$ routesPrefix $>.delete') && (
+                  <DeleteModal
+                    title={'¿Estás seguro de eliminar el <$ modelNamePascalCase $>?'}
+                    body={
+                      <>
+                        Eliminará permanentemente el <$ modelNamePascalCase $>
+                        <span className={'text-primary'}>
+                        {' '}
+                        &quot;{<$ modelNamePascalCase $>.name}&quot;{' '}
+                        </span>
+                        y lo quitará de nuestros servidores.
+                      </>
+                    }
+                    url={'<$ routesPrefix $>'}
+                    textBtn={'<$ modelNamePascalCase $>'}
+                    entity={<$ modelNamePascalCase $>}
+                  />
+                )}
+              </div>
+            </TableCell>
+          </motion.tr>
+        ))}
+      </motion.tbody>
+    </Table>
+  );
+};

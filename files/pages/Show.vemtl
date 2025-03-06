@@ -1,0 +1,68 @@
+<% let fields = this.model.fields %>
+<% let modelName = this.model.modelName.case('pascalCase') %>
+<% let modelNameLowerCase = this.model.modelName.toLowerCase() %>
+<% let modelNamePascalCase = this.model.modelName %>
+<% let modelPluralCamelCase = this.model.routes %>
+<% let pagesPrefix = this.model.routes %>
+<% let routesPrefix = this.model.routes %>
+
+import { IconBack } from '@billingflow/components/billingflow/icons/svg/actions/IconBack';
+import { IconUpdate } from '@billingflow/components/billingflow/icons/svg/actions/IconUpdate';
+import { Button } from '@billingflow/components/shadcn/button';
+import SidebarLayout from '@billingflow/layouts/SidebarLayout';
+import { <$ modelName $>Entity } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/entities/<$ modelName $>.entity';
+import { Head, Link } from '@inertiajs/react';
+
+/**
+ * Product show page.
+ */
+export default function <$ modelName $>ShowPage({
+  <$ modelNamePascalCase $>,
+}: {
+  <$ modelNamePascalCase $>: <$ modelName $>Entity;
+}) {
+  return (
+    <SidebarLayout title={'Detalles del <$ modelNamePascalCase $>'}>
+      <Head title="Detalles del <$ modelNamePascalCase $>" />
+
+      <div className="container mx-auto max-w-6xl px-4 pt-4">
+        <div className="container mx-auto max-w-[1200px]">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="text-form-title text-on-surface flex items-start gap-2 font-semibold">
+              <Link
+                href={route('<$ pagesPrefix $>.index')}
+                className={'text-on-surface flex'}>
+                <IconBack className="stroke-on-surface mr-4 h-45" />
+                Detalles del <$ modelNamePascalCase $>
+              </Link>
+            </div>
+
+            <div className="flex gap-3">
+              <Button asChild>
+                <Link
+                  href={route('<$ pagesPrefix $>.edit', <$ modelNamePascalCase $>.id)}
+                  className={'!text-surface text-bodyLarge font-semibold'}>
+                  <IconUpdate className="stroke-surface h-6 w-6" />
+                  Editar <$ modelNamePascalCase $>
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div className={'mt-5 flex flex-wrap'}>
+          <% fields.forEach((field, index) => { %>
+            <div className={'mb-6 w-full !px-1 lg:w-4/12'}>
+              <h5 className="label text-on-surface font-bold">
+                <$ field.label $>
+              </h5>
+              <span className="text-primary">{<$ modelNamePascalCase $>.<$ field.name $>}</span>
+            </div>
+          <% }); %>
+          </div>
+        </div>
+      </div>
+    </SidebarLayout>
+  );
+};

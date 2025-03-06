@@ -1,0 +1,17 @@
+<?php
+<% let name = this.model.name %>
+<% let model = this.model.name.toLowerCase() %>
+use App\Http\Controllers\<$ this.model.routes.case('pascalCase') $>\<$ this.model.controllerName $>;
+use Illuminate\Support\Facades\Route;
+
+/** <$ name $>>s route */
+Route::middleware('auth')->prefix('<$ this.model.routes $>')->group(function () {
+  Route::get('/', [<$ this.model.controllerName $>::class, 'index'])->name('<$ this.model.routes $>.index');
+  Route::get('create', [<$ this.model.controllerName $>::class, 'create'])->name('<$ this.model.routes $>.create');
+  Route::post('store', [<$ this.model.controllerName $>::class, 'store'])->name('<$ this.model.routes $>.store');
+  Route::get('{<$ this.model.modelName $>}', [<$ this.model.controllerName $>::class, 'show'])->name('<$ this.model.routes $>.show');
+  Route::get('{<$ this.model.modelName $>}/edit', [<$ this.model.controllerName $>::class, 'edit'])->name('<$ this.model.routes $>.edit');
+  Route::post('{<$ this.model.modelName $>}/update', [<$ this.model.controllerName $>::class, 'update'])->name('<$ this.model.routes $>.update');
+  Route::delete('{<$ this.model.modelName $>}/destroy', [<$ this.model.controllerName $>::class, 'destroy'])->name('<$ this.model.routes $>.destroy');
+});
+

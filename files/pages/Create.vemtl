@@ -1,0 +1,25 @@
+<% let modelName = this.model.modelName.case('pascalCase') %>
+<% let modelNamePascalCase = this.model.modelName %>
+<% let modelPluralCamelCase = this.model.routes %>
+<% let pagesPrefix = this.model.routes %>
+<% let routesPrefix = this.model.routes %>
+import SidebarLayout from '@billingflow/layouts/SidebarLayout';
+import { <$ modelName $>Form } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/form/<$ modelName $>Form';
+import { Head } from '@inertiajs/react';
+
+/**
+ * <$ modelName $> create page.
+ *
+ * @constructor
+ */
+export default function <$ modelName $>CreatePage() {
+  return (
+    <SidebarLayout title={'Agregar nuevo <$ modelNamePascalCase $>'}>
+      <Head title="Agregar nuevo <$ modelNamePascalCase $>" />
+
+      <div className="container mx-auto max-w-6xl px-4 pt-4">
+        <<$ modelName $>Form isEdit={false} />
+      </div>
+    </SidebarLayout>
+  );
+}
