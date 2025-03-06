@@ -3,7 +3,7 @@
     "id": "vemto.react.starter",
     "name": "vemto-react-starter",
     "title": "Vemto React Starter",
-    "description": "Vemto React Starter plugin to generate entities from Laravel to React.",
+    "description": "Vemto React Starter plugin to Laravel to React.",
     "image": "https://laravel.com/images/starter-kits/cube-react.png",
     "main": "src/main.js",
     "vueComponent": "dist/react-starter.umd.min.js",
