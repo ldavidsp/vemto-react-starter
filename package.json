@@ -1,15 +1,15 @@
 {
     "version": "1.0.0",
-    "id": "com.homeflowapp.typescript",
-    "name": "typescript-entity",
-    "title": "TypeScript Entity",
-    "description": "Vemto TypeScript Entity plugin to generate entities from Laravel to TypeScript.",
-    "image": "https://homeflowapp.com/assets/media/img/vemto_typescript.png",
+    "id": "vemto.react.starter",
+    "name": "vemto-react-starter",
+    "title": "Vemto React Starter",
+    "description": "Vemto React Starter plugin to generate entities from Laravel to React.",
+    "image": "https://laravel.com/images/starter-kits/cube-react.png",
     "main": "src/main.js",
-    "vueComponent": "dist/typescript-entity.umd.min.js",
+    "vueComponent": "dist/react-starter.umd.min.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ldavidsp/vemto-typescript-entity"
+        "url": "https://github.com/ldavidsp/vemto-react-starter"
     },
     "minVemtoVersion": "1.0.0",
     "scripts": {
