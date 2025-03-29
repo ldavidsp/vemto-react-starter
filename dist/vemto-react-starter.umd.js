@@ -44,7 +44,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ entry_lib)
 });
 
-;// ../../../.nvm/versions/node/v22.13.1/lib/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
+;// ../../../.nvm/versions/node/v22.14.0/lib/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 /* eslint-disable no-var */
 // This file is imported into lib/wc client bundles.
 
@@ -61,14 +61,14 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ const setPublicPath = (null);
 
-;// ../../../.nvm/versions/node/v22.13.1/lib/node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??vue-loader-options!../../../.nvm/versions/node/v22.13.1/lib/node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/Component.vue?vue&type=template&id=7cbe2729
+;// ../../../.nvm/versions/node/v22.14.0/lib/node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??vue-loader-options!../../../.nvm/versions/node/v22.14.0/lib/node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/Component.vue?vue&type=template&id=7cbe2729
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"w-full"},[_c('h1',{staticClass:"mt-4 mb-4"},[_vm._v("Vemto React Stater Kit")])])}]
 
 
 ;// ./src/Component.vue?vue&type=template&id=7cbe2729
 
-;// ../../../.nvm/versions/node/v22.13.1/lib/node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/runtime/componentNormalizer.js
+;// ../../../.nvm/versions/node/v22.14.0/lib/node_modules/@vue/cli-service/node_modules/@vue/vue-loader-v15/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
@@ -185,7 +185,7 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ const Component = (component.exports);
-;// ../../../.nvm/versions/node/v22.13.1/lib/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+;// ../../../.nvm/versions/node/v22.14.0/lib/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
 /* harmony default export */ const entry_lib = (Component);

@@ -10,10 +10,9 @@ module.exports = (vemto) => {
     beforeCodeGenerationEnd () {
       let models = vemto.getProjectModels()
       let projectCruds = vemto.getProject().getMainCruds()
+      let options = { data: {} }
 
       vemto.log.warning(`Generate React Starter Kit`)
-      let basePath = "resources/js/pages"
-
       /**
        * Generate entities.
        */
