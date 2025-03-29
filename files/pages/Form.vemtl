@@ -19,7 +19,7 @@ import {
   <$ modelNameLowerCase $>EntityInitial,
 } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/entities/<$ modelName $>.entity';
 import { Link, router, useForm } from '@inertiajs/react';
-import { FormEvent, FormEventHandler } from 'react';
+import { FormEvent, FormEventHandler, useState } from 'react';
 
 /**
  * <$ modelName $>Form component.
@@ -36,36 +36,36 @@ export const <$ modelName $>Form = ({
   <$ modelNameLowerCase $>?: <$ modelName $>Entity;
 }) => {
   const initFormData = <$ modelNameLowerCase $> ? <$ modelNameLowerCase $> : <$ modelNameLowerCase $>EntityInitial;
-  // @ts-ignore
-  const { data, setData, post, errors } = useForm<<$ modelName $>Entity>(initFormData);
+  const { data, setData, post, errors } = 
+    // @ts-ignore
+    useForm<<$ modelName $>Entity>(initFormData);
+  
+  /** Is submitting */
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const onSubmit: FormEventHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isEdit) {
       post(route('<$ modelPluralCamelCase $>.update', data.id), {
-        onFinish: response => {
-          const { completed } = response;
-          if (completed) {
-            Sonner.success(
-              'Editar <$ modelNameLowerCase $>',
-              '<$ modelNameLowerCase $> actualizado correctamente',
-            );
-            router.get(route('<$ modelPluralCamelCase $>.show', data.id));
-          }
+        onSuccess: () => {
+          Sonner.success(
+            'Editar <$ modelNameLowerCase $>',
+            '<$ modelNameLowerCase $> actualizado correctamente',
+          );
+          setIsSubmitting(false);
+          router.get(route('<$ modelPluralCamelCase $>.show', data.id));
         },
       });
     } else {
       post(route('<$ modelPluralCamelCase $>.store'), {
-        onFinish: response => {
-          const { completed } = response;
-          if (completed) {
-            Sonner.success(
-              'Nuevo <$ modelNameLowerCase $>',
-              'El <$ modelNameLowerCase $> se ha creado correctamente',
-            );
-            router.get(route('<$ modelPluralCamelCase $>.index'));
-          }
+        onSuccess: () => {
+          Sonner.success(
+            'Nuevo <$ modelNameLowerCase $>',
+            'El <$ modelNameLowerCase $> se ha creado correctamente',
+          );
+          setIsSubmitting(false);
+          router.get(route('<$ modelPluralCamelCase $>.index'));
         },
       });
     }
@@ -85,6 +85,7 @@ export const <$ modelName $>Form = ({
           </div>
           <div className="flex gap-3">
             <Button
+              disabled={isSubmitting}
               type={'submit'}
               className={'!text-surface text-bodyLarge font-semibold'}>
               {isEdit ? (
@@ -102,6 +103,7 @@ export const <$ modelName $>Form = ({
           <div className={'my-2 w-full !px-1 lg:w-4/12'}>
             <Label><$ field.label $></Label>
             <Input
+              disabled={isSubmitting}
               name={'<$ field.name $>'}
               value={data.<$ field.name $>}
               onChange={e => setData('<$ field.name $>', e.target.value)}

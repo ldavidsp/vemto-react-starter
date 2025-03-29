@@ -76,7 +76,7 @@ export const <$ modelName $>Table = ({
               'border-surface-container-highest hover:bg-surface-container data-[state=selected]:bg-muted cursor-pointer transition-colors'
             }>
             <% fields.forEach((field, index) => { %>
-            <TableCell className="text-primary rounded-s-x text-start">
+            <TableCell className="text-on-surface-variant rounded-s-xl text-start">
               {<$ modelNamePascalCase $>.<$ field.name $>}
             </TableCell>
             <% }); %>

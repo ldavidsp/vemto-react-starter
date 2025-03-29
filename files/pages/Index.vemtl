@@ -23,7 +23,6 @@ import SidebarLayout from '@billingflow/layouts/SidebarLayout';
 import { usePermissions } from '@billingflow/hooks/usePermissions';
 import { <$ modelName $>Entity } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/entities/<$ modelName $>.entity';
 import { <$ modelName $>Table } from '@billingflow/pages/authenticated/<$ modelPluralCamelCase $>/table/<$ modelName $>Table';
-import { SharedData } from '@billingflow/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { AlertCircle } from 'lucide-react';
@@ -41,7 +40,6 @@ export default function <$ modelName $>IndexPage({
   <$ modelPluralCamelCase $>: PaginationListing<<$ modelName $>Entity[]>;
   name: string;
 }) {
-  const { flash } = usePage<SharedData>().props;
   const { can } = usePermissions();
   const [filters, setFilters] = useState({
     name: name,
@@ -51,7 +49,7 @@ export default function <$ modelName $>IndexPage({
   const debouncedSearch = useDebouncedCallback(newFilters => {
     router.get(
       route('<$ routesPrefix $>.index'),
-      { ...newFilters, page: 1 },
+      { ...newFilters},
       { preserveState: true, replace: true },
     );
   }, 300);
@@ -85,19 +83,6 @@ export default function <$ modelName $>IndexPage({
             </div>
           </div>
           <hr className="border-surface-container-highest mt-3 mb-6 w-full" />
-        {flash.error && (
-          <div className="flex items-center justify-center gap-4">
-            <Alert
-              variant="destructive"
-              className={'border-error my-4 w-8/12 rounded-xl border-2'}>
-              <AlertCircle className="stroke-error h-4 w-4" />
-              <AlertTitle className="text-error text-xl">Error</AlertTitle>
-              <AlertDescription className={'text-error'}>
-                {flash.error}
-              </AlertDescription>
-            </Alert>
-          </div>
-        )}
           <div className={'flex-wra flex w-full justify-center'}>
             <div className={'my-2 w-full space-y-2 px-4 md:w-8/12'}>
               <Label className={'flex items-center'}>
