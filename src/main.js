@@ -10,7 +10,7 @@ module.exports = (vemto) => {
     beforeCodeGenerationEnd () {
       let models = vemto.getProjectModels()
       let projectCruds = vemto.getProject().getMainCruds()
-      let options = { data: {} }
+      let options = { formatAs: 'ts', data: {} }
 
       vemto.log.warning(`Generate React Starter Kit`)
       /**
@@ -21,7 +21,7 @@ module.exports = (vemto) => {
           model
         }
 
-        vemto.renderTemplate('files/TypeScriptEntity.vemtl', `resources/js/types/${model.name.case('pascalCase')}.entity.ts}`, options)
+        vemto.renderTemplate('files/TypeScriptEntity.vemtl', `resources/js/types/${model.name.case('pascalCase')}.entity.ts`, options)
       })
 
       /**
