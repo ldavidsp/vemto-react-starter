@@ -44,12 +44,12 @@ module.exports = (vemto) => {
         let routePath = `routes`
         options.data = data
 
-        vemto.renderTemplate('files/pages/Form.vemtl', `${crudPath}/form/${crud.model.name.case('pascalCase')}Form.tsx`, options)
-        vemto.renderTemplate('files/pages/Table.vemtl', `${crudPath}/table/${crud.model.name.case('pascalCase')}Table.tsx`, options)
-        vemto.renderTemplate('files/pages/Show.vemtl', `${crudPath}/show.tsx`, options)
-        vemto.renderTemplate('files/pages/Index.vemtl', `${crudPath}/index.tsx`, options)
-        vemto.renderTemplate('files/pages/Edit.vemtl', `${crudPath}/edit.tsx`, options)
-        vemto.renderTemplate('files/pages/Create.vemtl', `${crudPath}/create.tsx`, options)
+        vemto.renderTemplate('files/pages/Form.vemtl', `resources/js/pages/${crudPath}/form/${crud.model.name.case('pascalCase')}Form.tsx`, options)
+        vemto.renderTemplate('files/pages/Table.vemtl', `resources/js/pages/${crudPath}/table/${crud.model.name.case('pascalCase')}Table.tsx`, options)
+        vemto.renderTemplate('files/pages/Show.vemtl', `resources/js/pages/${crudPath}/show.tsx`, options)
+        vemto.renderTemplate('files/pages/Index.vemtl', `resources/js/pages/${crudPath}/index.tsx`, options)
+        vemto.renderTemplate('files/pages/Edit.vemtl', `resources/js/pages/${crudPath}/edit.tsx`, options)
+        vemto.renderTemplate('files/pages/Create.vemtl', `resources/js/pages/${crudPath}/create.tsx`, options)
         vemto.renderTemplate('files/pages/Controller.vemtl', `${controllerPath}/${crud.model.getControllerName()}.php`, options)
         vemto.renderTemplate('files/pages/Route.vemtl', `${routePath}/${crud.url}.php`, options)
       })
